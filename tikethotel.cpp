@@ -28,7 +28,7 @@ void menuLogin() {
 
         switch (pilih) {
             case 1 : 
-                //loginAdmin();
+                loginAdmin();
                 system("pause");
                 break;
                 
@@ -75,6 +75,42 @@ void loginUser() {
             case 4:
                 menuLogin();
                 exit(0);
+                break;
+            default :
+                cout << "Pilihan tidak valid!" << endl;
+                system("pause");
+                break;
+        }
+    } while(menu!=4);
+}
+
+void loginAdmin(){
+    int menu;
+    do {
+        system("cls");
+        cout << "MENU PILIHAN" << endl;
+        cout << setw(12) << setfill('-') << "" << endl;
+        cout << "1. Tambah Hotel" << endl;
+        cout << "2. Hapus Hotel" << endl;
+        cout << "3. Edit Hotel" << endl;
+        cout << "4. Kembali" << endl;
+        cout << "Pilih menu: "; cin >> menu;
+
+        switch (menu) {
+            case 1 : 
+                //tambahHotel();
+                system("pause");
+                break;
+                
+            case 2 :
+                //hapusHotel();
+                system("pause");
+                break;
+            case 3 :
+                //editHotel();
+                system("pause");
+                break;
+            case 4:
                 break;
             default :
                 cout << "Pilihan tidak valid!" << endl;
