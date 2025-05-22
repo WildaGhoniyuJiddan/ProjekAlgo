@@ -834,3 +834,54 @@ void pesanKamar() {
     cout << "Ingin pesan lagi?(y/n)"; cin >> pesanLagi;
     } while (pesanLagi == 'Y' || pesanLagi == 'y');
 }
+
+void ubahStatusKamar(){
+    if (head == nullptr) {
+        cout << "Tidak ada data hotel untuk diedit.\n";
+        return;
+    }
+    char namaUpdate[50];
+    cin.ignore();  // Bersihkan buffer newline
+    cout << "Masukkan nama kamar yang ingin diupdate: ";
+    cin.getline(namaUpdate, 50);
+
+    Kamar* current = head;
+    while (current != nullptr) {
+        if (strcmp(current->nama, namaUpdate) == 0) {
+            cout << "Data ditemukan. Masukkan Status baru:\n";
+            string updateStatus;
+            while (updateStatus != "Y" && updateStatus != "y" &&
+            updateStatus != "N" && updateStatus != "n")
+            {
+                cout << "Apakah Kamar tersebut tersedia (y/n) : ";
+                cin >> updateStatus;
+                if (updateStatus == "Y" || updateStatus == "y")
+                {
+                    current->tersedia = true;
+                }else if(updateStatus == "N" || updateStatus == "n"){
+                    current->tersedia = false;
+                }else {
+                    cout << "pilihan tidak valid\n";
+                    system("pause");
+                }
+            }
+            
+            
+            // Simpan ulang semua data ke file
+            FILE* file = fopen("dataKamar.dat", "wb");
+            Kamar* temp = head;
+            while (temp != nullptr) {
+                fwrite(temp, sizeof(Kamar), 1, file);
+                temp = temp->next;
+            }
+            fclose(file);
+
+            cout << "Data kamar berhasil diedit.\n";
+            system("pause");
+            return;
+        }
+        current = current->next;
+    }
+
+    cout << "Data kamar tidak ditemukan.\n";
+}
