@@ -296,9 +296,9 @@ void loginUser() {
 
         switch (menu) {
             case 1 : 
-                //bacaKamardariFile();
-                //daftarHotel();
-                // system("pause");
+                bacaKamardariFile();
+                daftarHotel();
+                system("pause");
                 break;
                 
             case 2 :
@@ -307,13 +307,13 @@ void loginUser() {
                 system("pause");
                 break;
             case 3:
-                //bacaKamardariFile();
-                //pesanKamar();
+                bacaKamardariFile();
+                pesanKamar();
                 break;
             case 4:
-                //bacaKamardariFile();
-                //bacaPelanggandariFile();
-                //checkoutKamar();
+                bacaKamardariFile();
+                bacaPelanggandariFile();
+                checkoutKamar();
                 break;
             case 5:
                 menuLogin();
