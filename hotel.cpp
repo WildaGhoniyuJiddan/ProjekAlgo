@@ -731,3 +731,106 @@ void editKamar() {
 
     cout << "Data kamar tidak ditemukan.\n";
 }
+
+
+void pesanKamar() {
+    int i = 0;
+    char pesanLagi;
+    string pesan;
+    do
+    {
+        cin.ignore();
+    cout << "Selamat datang di Menu Pemesanan Kamar" << endl;
+    cout << setw(38) << setfill('-') << endl;
+    cout << "Masukkan Nama Kamar yang ingin dipesan :"; getline(cin, pesan);
+    Kamar* current = head;
+    bool found = false;
+    while (current != nullptr) {
+        if (pesan == current->nama) {
+            found = true;
+            if (!current->tersedia) {
+                    cout << "Maaf, kamar sudah terisi.\n";
+                    break;
+                }
+
+            string status = current->tersedia ? "Tersedia" : "Terisi";
+            cout << "\nDeskripsi Kamar:\n";
+            cout << left << setw(91) << setfill('=') << "" << endl;
+            cout<< setw(20) << setfill(' ')<< "| Nama Kamar"
+                << setw(15) << setfill(' ')<< "| Nomor Kamar"
+                << setw(10) << setfill(' ')<< "| Rating"
+                << setw(15) << setfill(' ')<< "| Tipe Kamar"
+                << setw(15) << setfill(' ')<< "| Harga"
+                << setw(15) << setfill(' ')<< "| Status" << "|" << endl;
+            cout << left << setw(91) << setfill('=') << "" << endl;
+                
+                cout << left 
+                << setw(2) << setfill (' ')<< "|"
+                << setw(18) << setfill(' ') << current->nama << "| "
+                << setw(13) << setfill(' ') << current->nomor << "| "
+                << setw(8) << setfill(' ') << current->bintang << "| "
+                << setw(13) << setfill(' ') << current->tipe << "| "
+                << setw(13) << setfill(' ') << current->harga << "| "
+                << setw(13) << setfill(' ') << status << "| " << endl;
+            cout << left << setw(91) << setfill('=') << "" << endl;
+
+            string lanjut;
+            cout << "Apakah anda ingin melanjutkan pemesanan (y/n) : "; cin >> lanjut;
+            if (lanjut == "Y" || lanjut == "y")
+            {
+                current->tersedia = false;
+                FILE* file = fopen("dataKamar.dat", "wb");
+                if (file != NULL) {
+                    Kamar* current = head;
+                    while (current != nullptr) {
+                        fwrite(current, sizeof(Kamar), 1, file);
+                        current = current->next;
+                    }
+                    fclose(file);
+                } else {
+                    cout << "Gagal menyimpan data kamar ke file.\n";
+                }
+                pelanggan* baru = new pelanggan();
+                baru->next = nullptr;
+                cin.ignore();
+                cout << "Masukkan Nama Anda\t: "; cin.getline(baru->nama, 100);
+                cout << "Masukkan No. Telepon Anda\t: "; cin.getline(baru->noTelp, 100);
+                cout << "Masukkan Email Anda\t: "; cin.getline(baru->gmail, 100);
+                cout << "Masukkan Alamat Anda\t: "; cin.getline(baru->alamat, 100);
+                strcpy(baru->namakamar, current->nama);
+                if (kepala == nullptr)
+                {
+                    kepala = baru;
+                }else{
+                    pelanggan* bantu = kepala;
+                    while (bantu->next != nullptr)
+                    {
+                        bantu = bantu->next;
+                    }
+                    bantu->next = baru;
+                }
+                
+                file = fopen("dataPelanggan.dat", "ab");
+                if (file != NULL)
+                {
+                    fwrite(baru, sizeof(pelanggan), 1, file);
+                    fclose(file);
+                }else{
+                    cout << "gagal" << endl;
+                }
+                cout<< "berhasil" << endl;
+            }
+            
+            
+            break; //Hentikan pencarian setelah ditemukan
+        }
+        current = current->next;
+    }
+    if (!found) {
+        cout << "Kamar tidak ditemukan.\n";
+        break;
+    }
+    
+    cout << "Ingin pesan lagi?(y/n)"; cin >> pesanLagi;
+    } while (pesanLagi == 'Y' || pesanLagi == 'y');
+}
