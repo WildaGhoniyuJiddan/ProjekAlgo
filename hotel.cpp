@@ -584,4 +584,17 @@ void hapusHotel(){
             return;
         }
     }
+    // Perbarui isi file
+    file = fopen("dataKamar.dat", "wb");
+    if (file != NULL) {
+        Kamar* temp = head;
+        while (temp != nullptr) {
+            fwrite(temp, sizeof(Kamar), 1, file);
+            temp = temp->next;
+        }
+        fclose(file);
+        cout << "File dataKamar.dat berhasil diperbarui.\n";
+    } else {
+        cout << "Gagal membuka file untuk update!\n";
+    }
 }
