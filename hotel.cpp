@@ -885,3 +885,35 @@ void ubahStatusKamar(){
 
     cout << "Data kamar tidak ditemukan.\n";
 }
+
+void tampilkanPelanggan() {
+    pelanggan* bantu = kepala;
+    int no = 1;
+
+    if (bantu == nullptr) {
+        cout << "Tidak ada data Pelanggan.\n";
+        return;
+    }
+
+    cout << "\nDaftar Pelanggan:\n";
+     cout << left << setw(96) << setfill('=') << "" << endl;
+    cout << left << setw(5) << setfill(' ') << "| No"
+         << setw(20) << setfill(' ')<< "| Nama"
+         << setw(15) << setfill(' ')<< "| Nomor Telp"
+         << setw(10) << setfill(' ')<< "| Email"
+         << setw(15) << setfill(' ')<< "| Alamat"
+         << setw(30) << setfill(' ')<< "| Nama Kamar yang dipesan" << "|" << endl;
+    cout << left << setw(96) << setfill('=') << "" << endl;
+    while (bantu != nullptr) { 
+        cout << left 
+        << setw(2) << setfill (' ')<< "|"
+        << setw(3) << setfill(' ') << no++ << "| "
+        << setw(18) << setfill(' ') << bantu->nama << "| "
+        << setw(13) << setfill(' ') << bantu->noTelp << "| "
+        << setw(8) << setfill(' ') << bantu->gmail << "| "
+        << setw(13) << setfill(' ') << bantu->alamat << "| "
+        << setw(28) << setfill(' ') << bantu->namakamar << "| " << endl;
+        bantu = bantu->next;
+    }
+    cout << left << setw(96) << setfill('=') << "" << endl;
+}
