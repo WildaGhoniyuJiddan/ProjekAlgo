@@ -681,3 +681,53 @@ void bersihkanLinkedListPelanggan(){
     }
     kepala = nullptr;
 }
+
+void editKamar() {
+    if (head == nullptr) {
+        cout << "Tidak ada data hotel untuk diedit.\n";
+        return;
+    }
+
+    char namaEdit[50];
+    cin.ignore();  // Bersihkan buffer newline
+    cout << "Masukkan nama kamar yang ingin diedit: ";
+    cin.getline(namaEdit, 50);
+
+    Kamar* current = head;
+    while (current != nullptr) {
+        if (strcmp(current->nama, namaEdit) == 0) {
+            cout << "Data ditemukan. Masukkan data baru:\n";
+            
+            cout << "Nama Kamar Baru\t\t: ";
+            cin.getline(current->nama, 50);
+            
+            cout << "Nomor Kamar Baru\t: ";
+            cin >> current->nomor;
+            cin.ignore();
+
+            cout << "Jenis Kamar Baru\t: ";
+            cin.getline(current->tipe, 50);
+
+            cout << "Harga Baru\t\t: ";
+            cin >> current->harga;
+
+            cout << "Jumlah Bintang Baru\t: ";
+            cin >> current->bintang;
+
+            // Simpan ulang semua data ke file
+            FILE* file = fopen("dataKamar.dat", "wb");
+            Kamar* temp = head;
+            while (temp != nullptr) {
+                fwrite(temp, sizeof(Kamar), 1, file);
+                temp = temp->next;
+            }
+            fclose(file);
+
+            cout << "Data kamar berhasil diedit.\n";
+            return;
+        }
+        current = current->next;
+    }
+
+    cout << "Data kamar tidak ditemukan.\n";
+}
