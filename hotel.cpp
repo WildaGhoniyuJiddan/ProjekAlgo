@@ -547,3 +547,41 @@ void bersihkanLinkedListKamar() {
     }
     head = nullptr;
 }
+
+void hapusHotel(){
+    if (head == nullptr) {
+        cout << "Tidak ada data hotel untuk dihapus.\n";
+        return;
+    }
+    char namaHapus[50];
+    cin.ignore();  // Membersihkan buffer newline
+    cout << "Masukkan nama hotel yang ingin dihapus: ";
+    cin.getline(namaHapus, 50);
+
+    // Kasus khusus: node pertama (head)
+    if (strcmp(head->nama, namaHapus) == 0) {
+        Kamar* hapus = head;
+        head = head->next;
+        delete hapus;
+        cout << "Kamar berhasil dihapus dari linked list (sebagai head).\n";
+    } else {
+        Kamar* current = head;
+        bool found = false;
+        while (current->next != nullptr) {
+            if (strcmp(current->next->nama, namaHapus) == 0) {
+                Kamar* hapus = current->next;
+                current->next = hapus->next;
+                delete hapus;
+                cout << "Kamar berhasil dihapus dari linked list.\n";
+                found = true;
+                break;
+            }
+            current = current->next;
+        }
+
+        if (!found) {
+            cout << "Kamar dengan nama tersebut tidak ditemukan.\n";
+            return;
+        }
+    }
+}
