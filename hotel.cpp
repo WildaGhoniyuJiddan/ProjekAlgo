@@ -634,3 +634,50 @@ void tampilkanHotel() {
     }
     cout << left << setw(96) << setfill('=') << "" << endl;
 }
+
+void bacaPelanggandariFile() {
+    bersihkanLinkedListPelanggan();
+    file = fopen("dataPelanggan.dat", "rb");
+    if (file == NULL) {
+        cout << "File dataPelanggan.dat tidak ditemukan.\n";
+        return;
+    }
+
+    pelanggan temp;
+    while (fread(&temp, sizeof(pelanggan), 1, file)) {
+        pelanggan* baru = new pelanggan;
+
+        //Salin isi struct ke node baru
+        strcpy(baru->nama, temp.nama);
+        strcpy(baru->noTelp, temp.noTelp);
+        strcpy(baru->gmail, temp.gmail);
+        strcpy(baru->alamat, temp.alamat);
+        strcpy(baru->namakamar, temp.namakamar);
+        baru->next = nullptr;
+
+        //Masukkan ke linked list
+        if (kepala == nullptr) {
+            kepala = baru;
+        } else {
+            pelanggan* current = kepala;
+            while (current->next != nullptr) {
+                current = current->next;
+            }
+            current->next = baru;
+        }
+    }
+
+    fclose(file);
+    cout << "Data hotel berhasil dibaca dari file ke linked list.\n";
+}
+
+void bersihkanLinkedListPelanggan(){
+    pelanggan* bantu = kepala;
+    while (bantu != nullptr) {
+        pelanggan* hapus = bantu;
+        bantu = bantu->next;
+        kepala = kepala->next;
+        delete hapus;
+    }
+    kepala = nullptr;
+}
