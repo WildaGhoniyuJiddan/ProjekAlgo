@@ -249,3 +249,107 @@ void loginUser() {
         }
     } while(menu!=5);
 }
+
+
+
+void tambahHotel() {
+    int jml;
+    cout << "Input Data Kamar" << endl;
+    cout << setw(15) << setfill('-') << "" << endl;
+
+    cout << "Jumlah kamar yang ingin ditambahkan: ";
+    cin >> jml;
+    cin.ignore();
+
+    for (int i = 0; i < jml; i++) {
+        Kamar* baru = new Kamar;
+        baru->next = nullptr;
+
+        cout << "\nData ke-" << i + 1 << ":" << endl;
+        cout << "Masukkan Nomor Kamar\t: ";
+        cin >> baru->nomor;
+        cin.ignore();
+        cout << "Masukkan Nama Kamar\t: ";
+        cin.getline(baru->nama, 50);
+        cout << "Masukkan Rating Kamar\t: ";
+        cin >> baru->bintang;
+        cout << "Masukkan Tipe Kamar\t: ";
+        cin >> baru->tipe;
+        cout << "Masukkan Harga Kamar\t: ";
+        cin >> baru->harga;
+        baru->tersedia = true;
+        cin.ignore();
+
+        //Tambahkan ke linked list
+        if (head == nullptr) {
+            head = baru;
+        } else {
+            Kamar* bantu = head;
+            while (bantu->next != nullptr) {
+                bantu = bantu->next;
+            }
+            bantu->next = baru;
+        }
+
+        //Simpan ke file
+        file = fopen("dataKamar.dat", "ab");
+        if (file != NULL) {
+            fwrite(baru, sizeof(Kamar),1, file);
+            fclose(file);
+        } else {
+            cout << "Gagal menyimpan ke file!" << endl;
+        }
+    }
+
+    cout << "\nData berhasil ditambahkan dan disimpan.\n";
+}
+
+void bacaKamardariFile() {
+
+    bersihkanLinkedListKamar();
+    file = fopen("dataKamar.dat", "rb");
+    if (file == NULL) {
+        cout << "File dataKamar.dat tidak ditemukan.\n";
+        return;
+    }
+
+    Kamar temp;
+    while (fread(&temp, sizeof(Kamar), 1, file)) {
+        Kamar* baru = new Kamar;
+
+        //Salin isi struct ke node baru
+        strcpy(baru->nama, temp.nama);
+        baru->nomor =  temp.nomor;
+        strcpy(baru->tipe, temp.tipe);
+        baru->bintang = temp.bintang;
+        baru->harga = temp.harga;
+        baru->tersedia = temp.tersedia;
+        baru->next = nullptr;
+
+        //Masukkan ke linked list
+        if (head == nullptr) {
+            head = baru;
+        } else {
+            Kamar* current = head;
+            while (current->next != nullptr) {
+                current = current->next;
+            }
+            current->next = baru;
+        }
+    }
+
+    fclose(file);
+    cout << "Data hotel berhasil dibaca dari file ke linked list.\n";
+}
+
+
+void bersihkanLinkedListKamar() {
+    Kamar* bantu = head;
+    while (bantu != nullptr) {
+        Kamar* hapus = bantu;
+        bantu = bantu->next;
+        head = head->next;
+        delete hapus;
+    }
+    head = nullptr;
+}
