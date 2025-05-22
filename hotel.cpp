@@ -917,3 +917,124 @@ void tampilkanPelanggan() {
     }
     cout << left << setw(96) << setfill('=') << "" << endl;
 }
+
+void tampilkanHotelyangTerisi(){
+    Kamar* bantuKamar = head;
+    pelanggan* bantuPelanggan = kepala;
+    int no = 1;
+
+    if (bantuKamar == nullptr) {
+        cout << "Tidak ada data hotel.\n";
+        return;
+    }
+
+    cout << "\nDaftar Kamar:\n";
+     cout << left << setw(96) << setfill('=') << "" << endl;
+    cout << left << setw(5) << setfill(' ') << "| No"
+         << setw(20) << setfill(' ')<< "| Nama Kamar"
+         << setw(15) << setfill(' ')<< "| Nomor Kamar"
+         << setw(10) << setfill(' ')<< "| Rating"
+         << setw(15) << setfill(' ')<< "| Tipe Kamar"
+         << setw(15) << setfill(' ')<< "| Harga"
+         << setw(15) << setfill(' ')<< "| Dipesan oleh" << "|" << endl;
+    cout << left << setw(96) << setfill('=') << "" << endl;
+
+    while (bantuKamar != nullptr) { 
+        if (!bantuKamar->tersedia) {
+        // Cari pelanggan yang memesan kamar ini
+        pelanggan* pemesan = kepala;
+        const char* namaKamarDicari = bantuKamar->nama;
+
+        while (pemesan != nullptr) {
+            if (strcmp(pemesan->namakamar, namaKamarDicari) == 0) {
+                break; // ketemu
+            }
+            pemesan = pemesan->next;
+        }
+        cout << setfill(' ');
+        cout << left 
+            << setw(2) << "|"
+            << setw(3) << no++ << "| "
+            << setw(18) << bantuKamar->nama << "| "
+            << setw(13) << bantuKamar->nomor << "| "
+            << setw(8) << bantuKamar->bintang << "| "
+            << setw(13) << bantuKamar->tipe << "| "
+            << setw(13) << bantuKamar->harga << "| "
+            << setw(13) << (pemesan ? pemesan->nama : "unknown") << "|" << endl;
+    }
+        bantuKamar = bantuKamar->next;
+    }
+    cout << left << setw(96) << setfill('=') << "" << endl;
+}
+
+void checkoutKamar() {
+    cin.ignore();
+    char namaKamar[50];
+    cout << "Masukkan Nama Kamar yang ingin di-checkout: ";
+    cin.getline(namaKamar, 50);
+
+    Kamar* bantuKamar = head;
+    bool kamarDitemukan = false;
+
+    // Cari kamar
+    while (bantuKamar != nullptr) {
+        if (strcmp(namaKamar, bantuKamar->nama) == 0 && !bantuKamar->tersedia) {
+            kamarDitemukan = true;
+            bantuKamar->tersedia = true;  // Tandai kembali sebagai tersedia
+            cout << "Kamar \"" << bantuKamar->nama << "\" berhasil di-checkout.\n";
+            system("pause");
+            break;
+        }
+        bantuKamar = bantuKamar->next;
+    }
+
+    if (!kamarDitemukan) {
+        cout << "Kamar tidak ditemukan atau sudah tersedia.\n";
+        system("pause");
+        return;
+    }
+
+    // Hapus data pelanggan yang memesan kamar tersebut
+    pelanggan* bantu = nullptr;
+    pelanggan* current = kepala;
+    while (current != nullptr) {
+        if (strcmp(current->namakamar, namaKamar) == 0) {
+            if (bantu == nullptr) {
+                kepala = current->next;
+            } else {
+                bantu->next = current->next;
+            }
+            delete current;
+            cout << "Data pelanggan terkait juga berhasil dihapus.\n";
+            break;
+        }
+        bantu = current;
+        current = current->next;
+    }
+
+    // Simpan perubahan ke file dataKamar.dat
+    FILE* file = fopen("dataKamar.dat", "wb");
+    if (file != NULL) {
+        Kamar* temp = head;
+        while (temp != nullptr) {
+            fwrite(temp, sizeof(Kamar), 1, file);
+            temp = temp->next;
+        }
+        fclose(file);
+    } else {
+        cout << "Gagal menyimpan data kamar ke file.\n";
+    }
+
+    // Simpan perubahan ke file dataPelanggan.dat
+    file = fopen("dataPelanggan.dat", "wb");
+    if (file != NULL) {
+        pelanggan* temp = kepala;
+        while (temp != nullptr) {
+            fwrite(temp, sizeof(pelanggan), 1, file);
+            temp = temp->next;
+        }
+        fclose(file);
+    } else {
+        cout << "Gagal menyimpan data pelanggan ke file.\n";
+    }
+}
