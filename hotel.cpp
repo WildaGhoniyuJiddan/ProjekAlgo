@@ -30,6 +30,15 @@ void loginUser();
 void daftarHotel();
 void cariHotel();
 void pesanKamar();
+void tambahHotel();
+void bacaKamardariFile();
+void hapusHotel();
+void editKamar();
+void tampilkanHotel();
+void bacaPelanggandariFile();
+void tampilkanHotelyangTerisi();
+void tampilkanPelanggan();
+void ubahStatusKamar();
 
 int main() {
     menuLogin();
@@ -179,4 +188,79 @@ for (int i = 0; i < count; i++) {
     }
     cout << left << setw(56) << setfill ('=') << "" << endl; 
     system("pause");
+}
+
+void loginAdmin(){
+    system("cls");
+    int menu;
+    string username, password;
+    cout << "Login Sebagai Admin" << endl;
+    cout << "Masukkan Username : "; cin >> username;
+    cout << "Masukkan Password : "; cin >> password;
+    if (username == "admin" && password == "admin123")
+    {
+        do {
+        system("cls");
+        cout << setw(12) << setfill('-') << "" << endl;
+        cout << "MENU PILIHAN" << endl;
+        cout << setw(12) << setfill('-') << "" << endl;
+        cout << "1. Tambah Kamar" << endl;
+        cout << "2. Hapus Kamar" << endl;
+        cout << "3. Edit Kamar" << endl;
+        cout << "4. Lihat Data Kamar" << endl;
+        cout << "5. Lihat Data Kamar yang terisi" << endl;
+        cout << "6. Lihat Data Pelanggan" << endl;
+        cout << "7. Ubah Status Kamar" << endl;
+        cout << "8. Kembali" << endl;
+        cout << "Pilih menu: "; cin >> menu;
+
+        switch (menu) {
+            case 1 : 
+                tambahHotel();
+                system("pause");
+                break;
+                
+            case 2 :
+                bacaKamardariFile();
+                hapusHotel();
+                system("pause");
+                break;
+            case 3:
+                bacaKamardariFile();
+                editKamar();
+                break;
+            case 4 :
+                bacaKamardariFile();
+                tampilkanHotel();
+                system("pause");
+                break;
+            case 5:
+                bacaKamardariFile();
+                bacaPelanggandariFile();
+                tampilkanHotelyangTerisi();
+                system("pause");
+                break;
+            case 6:
+                bacaPelanggandariFile();
+                tampilkanPelanggan();
+                system("pause");
+                break;
+            case 7:
+                bacaKamardariFile();
+                ubahStatusKamar();
+                break;
+            case 8:
+                menuLogin();
+                break;
+            default :
+                cout << "Pilihan tidak valid!" << endl;
+                system("pause");
+                break;
+        }
+        } while(menu!=8);
+    }else {
+        cout << "Login gagal, Username atau Password salah" << endl;
+        system("pause");
+        menuLogin();
+    }
 }
