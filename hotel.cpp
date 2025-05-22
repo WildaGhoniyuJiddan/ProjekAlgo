@@ -90,6 +90,38 @@ void menuLogin() {
     } while(pilih!=3);
 }
 
+void daftarHotel(){
+    int pil;
+    do {
+        system("cls");
+        cout << "Anda Ingin Melihat Kamar Berdasarkan Apa?\n";
+        cout << "1. Berdasarkan Harga\n";
+        cout << "2. Berdasarkan Bintang(rating)\n";
+        cout << "3. Kembali\n";
+        cout << "Pilih Menu : "; cin >> pil;
+        switch (pil)
+        {
+        case 1:
+            bacaKamardariFile();
+            sortHarga();
+            break;
+        case 2:
+            bacaKamardariFile();
+            sortBintang();
+            break;
+        case 3: 
+            loginUser();
+            break;
+        default:
+            cout << "Pilihan tidak valid!" << endl;
+            system("pause");
+            break;
+        }
+
+    } while (pil !=3);
+    
+}
+
 void sortHarga() {
     Kamar* arrayHotel[9999]; 
     int count = 0;
@@ -100,33 +132,33 @@ void sortHarga() {
     current = current->next;
     }
 
-for (int i = 0; i < count - 1; i++) {
-    for (int j = 0; j < count - i - 1; j++) {
-        if (arrayHotel[j]->harga > arrayHotel[j + 1]->harga){
-            swap(arrayHotel[j], arrayHotel[j + 1]); //tukar pointer
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (arrayHotel[j]->harga > arrayHotel[j + 1]->harga){
+                swap(arrayHotel[j], arrayHotel[j + 1]); //tukar pointer
+            }
         }
     }
-}
 
-cout << "Data telah diurutkan berdasarkan Harga Termurah:\n";
-    cout << left << setw(56) << setfill ('=') << "" << endl;
-    cout << left 
-        << setw(5) << setfill(' ') << "| No"
-        << setw(20) << setfill(' ') << "| Nama Kamar"
-        << setw(15) << setfill(' ') << "| Harga"
-        << setw(15) << setfill(' ') << "| Status" << "|" << endl;
-    cout << left << setw(56) << setfill ('=') << "" << endl;    
-for (int i = 0; i < count; i++) {
-    string status = (arrayHotel[i]->tersedia == true) ? "Tersedia" : "Terisi";
-    cout << left
-            << setw(2) << setfill(' ') << "|"
-            << setw(3) << setfill(' ') << i+1 << "| "
-            << setw(18) << setfill(' ') << arrayHotel[i]->nama << "| "
-            << setw(13) << setfill(' ') << arrayHotel[i]->harga << "| "
-            << setw(13) << setfill(' ') << status << "|" << endl;
-    }
-    cout << left << setw(56) << setfill ('=') << "" << endl; 
-    system("pause");
+    cout << "Data telah diurutkan berdasarkan Harga Termurah:\n";
+        cout << left << setw(56) << setfill ('=') << "" << endl;
+        cout << left 
+            << setw(5) << setfill(' ') << "| No"
+            << setw(20) << setfill(' ') << "| Nama Kamar"
+            << setw(15) << setfill(' ') << "| Harga"
+            << setw(15) << setfill(' ') << "| Status" << "|" << endl;
+        cout << left << setw(56) << setfill ('=') << "" << endl;    
+    for (int i = 0; i < count; i++) {
+        string status = (arrayHotel[i]->tersedia == true) ? "Tersedia" : "Terisi";
+        cout << left
+                << setw(2) << setfill(' ') << "|"
+                << setw(3) << setfill(' ') << i+1 << "| "
+                << setw(18) << setfill(' ') << arrayHotel[i]->nama << "| "
+                << setw(13) << setfill(' ') << arrayHotel[i]->harga << "| "
+                << setw(13) << setfill(' ') << status << "|" << endl;
+        }
+        cout << left << setw(56) << setfill ('=') << "" << endl; 
+        system("pause");
 }
 
 void sortBintang() {
@@ -149,7 +181,6 @@ void sortBintang() {
         }
     }
 
-   
     cout << "Data telah diurutkan berdasarkan Bintang Tertinggi:\n";
     cout << left << setw(81) << setfill ('=') << "" << endl;
     cout << left 
@@ -160,8 +191,8 @@ void sortBintang() {
         << setw(15) << setfill(' ') << "| status" << "|" << endl;
     cout << left << setw(81) << setfill ('=') << "" << endl; 
     for (int i = 0; i < count; i++) {
-         string status = (arrayHotel[i]->tersedia == true) ? "Tersedia" : "Terisi";
-         cout << left
+        string status = (arrayHotel[i]->tersedia == true) ? "Tersedia" : "Terisi";
+        cout << left
             << setw(2) << setfill(' ') << "|"
             << setw(3) << setfill(' ') << i+1 << "| "
             << setw(18) << setfill(' ') << arrayHotel[i]->nama << "| "
@@ -326,6 +357,94 @@ void cariHotel(){
     } while(mpilih!=3);
 }
 
+void berdasarnama() {
+    system("cls");
+    string target;
+    cout << "Masukkan nama hotel yang ingin dicari: ";
+    cin.ignore();
+    getline(cin, target);
+
+    Kamar* current = head;
+    bool found = false;
+
+    while (current != nullptr) {
+        if (target == current->nama) {
+            string status = current->tersedia ? "Tersedia" : "Terisi";
+            cout << "\nDaftar Kamar:\n";
+            cout << left << setw(91) << setfill('=') << "" << endl;
+            cout<< setw(20) << setfill(' ')<< "| Nama Kamar"
+                << setw(15) << setfill(' ')<< "| Nomor Kamar"
+                << setw(10) << setfill(' ')<< "| Rating"
+                << setw(15) << setfill(' ')<< "| Tipe Kamar"
+                << setw(15) << setfill(' ')<< "| Harga"
+                << setw(15) << setfill(' ')<< "| Status" << "|" << endl;
+            cout << left << setw(91) << setfill('=') << "" << endl;
+                
+                cout << left 
+                << setw(2) << setfill (' ')<< "|"
+                << setw(18) << setfill(' ') << current->nama << "| "
+                << setw(13) << setfill(' ') << current->nomor << "| "
+                << setw(8) << setfill(' ') << current->bintang << "| "
+                << setw(13) << setfill(' ') << current->tipe << "| "
+                << setw(13) << setfill(' ') << current->harga << "| "
+                << setw(13) << setfill(' ') << status << "| " << endl;
+            cout << left << setw(91) << setfill('=') << "" << endl;
+            found = true;
+            break; //Hentikan pencarian setelah ditemukan
+        }
+        current = current->next;
+    }
+
+    if (!found) {
+        cout << "Kamar tidak ditemukan.\n";
+    }
+
+    system("pause");
+}
+
+void berdasarkanTipe() {
+    system("cls");
+    string target;
+    cout << "Masukkan tipe kamar yang ingin dicari: ";
+    cin.ignore();
+    getline(cin, target);
+
+    Kamar* current = head;
+    bool found = false;
+
+    cout << "\nDaftar Kamar:\n";
+            cout << left << setw(91) << setfill('=') << "" << endl;
+            cout<< setw(20) << setfill(' ')<< "| Nama Kamar"
+                << setw(15) << setfill(' ')<< "| Nomor Kamar"
+                << setw(10) << setfill(' ')<< "| Rating"
+                << setw(15) << setfill(' ')<< "| Tipe Kamar"
+                << setw(15) << setfill(' ')<< "| Harga"
+                << setw(15) << setfill(' ')<< "| Status" << "|" << endl;
+            cout << left << setw(91) << setfill('=') << "" << endl;
+    while (current != nullptr) {
+        if (target == current->tipe) {
+            string status = current->tersedia ? "Tersedia" : "Terisi";
+                cout << left 
+                << setw(2) << setfill (' ')<< "|"
+                << setw(18) << setfill(' ') << current->nama << "| "
+                << setw(13) << setfill(' ') << current->nomor << "| "
+                << setw(8) << setfill(' ') << current->bintang << "| "
+                << setw(13) << setfill(' ') << current->tipe << "| "
+                << setw(13) << setfill(' ') << current->harga << "| "
+                << setw(13) << setfill(' ') << status << "| " << endl;
+            
+            found = true;
+        }
+        current = current->next;
+    }
+    cout << left << setw(91) << setfill('=') << "" << endl;
+
+    if (!found) {
+        cout << "Kota tidak ditemukan.\n";
+    }
+
+    system("pause");
+}
 
 void tambahHotel() {
     int jml;
