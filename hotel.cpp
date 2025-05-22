@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cstring>
 using namespace std;
 
 struct Kamar{
@@ -24,21 +25,32 @@ struct pelanggan{
 Kamar* head=NULL;
 pelanggan* kepala = nullptr;
 
+FILE *file;
+
 void menuLogin();
 void loginAdmin();
 void loginUser();
 void daftarHotel();
 void cariHotel();
+void berdasarnama();
+void berdasarkanTipe();
 void pesanKamar();
 void tambahHotel();
-void bacaKamardariFile();
 void hapusHotel();
-void editKamar();
+void editHotel();
+void bacaKamardariFile();
 void tampilkanHotel();
-void bacaPelanggandariFile();
-void tampilkanHotelyangTerisi();
-void tampilkanPelanggan();
+void bersihkanLinkedListKamar();
+void sortHarga();
+void sortBintang();
+void editKamar();
 void ubahStatusKamar();
+void tampilkanHotelyangTerisi();
+void bacaPelanggandariFile();
+void bersihkanLinkedListPelanggan();
+void tampilkanPelanggan();
+void checkoutKamar();
+
 
 int main() {
     menuLogin();
@@ -76,79 +88,6 @@ void menuLogin() {
                 break;
         }
     } while(pilih!=3);
-}
-void loginUser() {
-    int menu;
-    do {
-        system("cls");
-        cout << "MENU PILIHAN" << endl;
-        cout << setw(12) << setfill('-') << "" << endl;
-        cout << "1. Lihat Dafar Hotel" << endl;
-        cout << "2. Cari Hotel" << endl;
-        cout << "3. Pemesanan Kamar" << endl;
-        cout << "4. Kembali" << endl;
-        cout << "Pilih menu: "; cin >> menu;
-
-        switch (menu) {
-            case 1 : 
-                //daftarHotel();
-                system("pause");
-                break;
-                
-            case 2 :
-                //cariHotel();
-                system("pause");
-                break;
-            case 3 :
-                //pesanKamar();
-                system("pause");
-                break;
-            case 4:
-                menuLogin();
-                exit(0);
-                break;
-            default :
-                cout << "Pilihan tidak valid!" << endl;
-                system("pause");
-                break;
-        }
-    } while(menu!=4);
-}
-
-void loginAdmin(){
-    int menu;
-    do {
-        system("cls");
-        cout << "MENU PILIHAN" << endl;
-        cout << setw(12) << setfill('-') << "" << endl;
-        cout << "1. Tambah Hotel" << endl;
-        cout << "2. Hapus Hotel" << endl;
-        cout << "3. Edit Hotel" << endl;
-        cout << "4. Kembali" << endl;
-        cout << "Pilih menu: "; cin >> menu;
-
-        switch (menu) {
-            case 1 : 
-                //tambahHotel();
-                system("pause");
-                break;
-                
-            case 2 :
-                //hapusHotel();
-                system("pause");
-                break;
-            case 3 :
-                //editHotel();
-                system("pause");
-                break;
-            case 4:
-                break;
-            default :
-                cout << "Pilihan tidak valid!" << endl;
-                system("pause");
-                break;
-        }
-    } while(menu!=4);
 }
 
 void sortHarga() {
@@ -263,4 +202,50 @@ void loginAdmin(){
         system("pause");
         menuLogin();
     }
+}
+
+void loginUser() {
+    int menu;
+    do {
+        system("cls");
+        cout << setw(12) << setfill('-') << "" << endl;
+        cout << "MENU PILIHAN" << endl;
+        cout << setw(12) << setfill('-') << "" << endl;
+        cout << "1. Lihat Daftar Kamar" << endl;
+        cout << "2. Cari Kamar" << endl;
+        cout << "3. Pesan Langsung" << endl;
+        cout << "4. Checkout kamar" << endl;
+        cout << "5. Kembali" << endl;
+        cout << "Pilih menu: "; cin >> menu;
+
+        switch (menu) {
+            case 1 : 
+                //bacaKamardariFile();
+                //daftarHotel();
+                // system("pause");
+                break;
+                
+            case 2 :
+                //bacaKamardariFile();
+                //cariHotel();
+                //system("pause");
+                break;
+            case 3:
+                //bacaKamardariFile();
+                //pesanKamar();
+                break;
+            case 4:
+                //bacaKamardariFile();
+                //bacaPelanggandariFile();
+                //checkoutKamar();
+                break;
+            case 5:
+                menuLogin();
+                break;
+            default :
+                cout << "Pilihan tidak valid!" << endl;
+                system("pause");
+                break;
+        }
+    } while(menu!=5);
 }
