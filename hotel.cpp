@@ -129,6 +129,52 @@ for (int i = 0; i < count; i++) {
     system("pause");
 }
 
+void sortBintang() {
+    Kamar* arrayHotel[9999]; 
+    int count = 0;
+    Kamar* current = head;
+
+    //Masukkan semua node ke array
+    while (current != nullptr) {
+        arrayHotel[count++] = current;
+        current = current->next;
+    }
+
+    //Bubble sort berdasarkan bintang
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (arrayHotel[j]->bintang < arrayHotel[j + 1]->bintang) {
+                swap(arrayHotel[j], arrayHotel[j + 1]);
+            }
+        }
+    }
+
+   
+    cout << "Data telah diurutkan berdasarkan Bintang Tertinggi:\n";
+    cout << left << setw(81) << setfill ('=') << "" << endl;
+    cout << left 
+        << setw(5) << setfill(' ') << "| No"
+        << setw(20) << setfill(' ') << "| Nama Kamar"
+        << setw(20) << setfill(' ') << "| Rating"
+        << setw(20) << setfill(' ') << "| Harga"
+        << setw(15) << setfill(' ') << "| status" << "|" << endl;
+    cout << left << setw(81) << setfill ('=') << "" << endl; 
+    for (int i = 0; i < count; i++) {
+         string status = (arrayHotel[i]->tersedia == true) ? "Tersedia" : "Terisi";
+         cout << left
+            << setw(2) << setfill(' ') << "|"
+            << setw(3) << setfill(' ') << i+1 << "| "
+            << setw(18) << setfill(' ') << arrayHotel[i]->nama << "| "
+            << setw(18) << setfill(' ') << arrayHotel[i]->bintang << "| "
+            << setw(18) << setfill(' ') << arrayHotel[i]->harga << "| "
+            << setw(13) << setfill(' ') << status << "|" << endl;
+    }
+    cout << left << setw(81) << setfill ('=') << "" << endl; 
+
+    system("pause");
+}
+
+
 void loginAdmin(){
     system("cls");
     int menu;
@@ -226,9 +272,9 @@ void loginUser() {
                 break;
                 
             case 2 :
-                //bacaKamardariFile();
-                //cariHotel();
-                //system("pause");
+                bacaKamardariFile();
+                cariHotel();
+                system("pause");
                 break;
             case 3:
                 //bacaKamardariFile();
@@ -250,6 +296,35 @@ void loginUser() {
     } while(menu!=5);
 }
 
+void cariHotel(){
+    int mpilih;
+    do{
+        system("cls");
+        cout << setw(12) << setfill('-') << "" << endl;
+        cout << "MENU PILIHAN" << endl;
+        cout << setw(12) << setfill('-') << "" << endl;
+        cout << "1. Berdasarkan Nama" << endl;
+        cout << "2. Berdasarkan Tipe" << endl;
+        cout << "3. Kembali" << endl;
+        cout << "Pilih menu: "; cin >> mpilih;
+
+        switch (mpilih) {
+            case 1 : 
+                berdasarnama();
+                break;
+            case 2 :
+                berdasarkanTipe();
+                break;
+            case 3 :
+                loginUser();
+                break;
+            default :
+                cout << "Pilihan tidak valid!" << endl;
+                system("pause");
+                break;
+        }
+    } while(mpilih!=3);
+}
 
 
 void tambahHotel() {
