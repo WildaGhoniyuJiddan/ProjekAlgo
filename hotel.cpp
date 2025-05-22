@@ -37,7 +37,6 @@ void berdasarkanTipe();
 void pesanKamar();
 void tambahHotel();
 void hapusHotel();
-void editHotel();
 void bacaKamardariFile();
 void tampilkanHotel();
 void bersihkanLinkedListKamar();
@@ -597,4 +596,41 @@ void hapusHotel(){
     } else {
         cout << "Gagal membuka file untuk update!\n";
     }
+}
+
+void tampilkanHotel() {
+    Kamar* current = head;
+    int no = 1;
+
+    if (current == nullptr) {
+        cout << "Tidak ada data hotel.\n";
+        return;
+    }
+
+    cout << "\nDaftar Kamar:\n";
+     cout << left << setw(96) << setfill('=') << "" << endl;
+    cout << left << setw(5) << setfill(' ') << "| No"
+         << setw(20) << setfill(' ')<< "| Nama Kamar"
+         << setw(15) << setfill(' ')<< "| Nomor Kamar"
+         << setw(10) << setfill(' ')<< "| Rating"
+         << setw(15) << setfill(' ')<< "| Tipe Kamar"
+         << setw(15) << setfill(' ')<< "| Harga"
+         << setw(15) << setfill(' ')<< "| Status" << "|" << endl;
+    cout << left << setw(96) << setfill('=') << "" << endl;
+    while (current != nullptr) { 
+
+        string status = current->tersedia ? "Tersedia" : "Terisi";
+        
+        cout << left 
+        << setw(2) << setfill (' ')<< "|"
+        << setw(3) << setfill(' ') << no++ << "| "
+        << setw(18) << setfill(' ') << current->nama << "| "
+        << setw(13) << setfill(' ') << current->nomor << "| "
+        << setw(8) << setfill(' ') << current->bintang << "| "
+        << setw(13) << setfill(' ') << current->tipe << "| "
+        << setw(13) << setfill(' ') << current->harga << "| "
+        << setw(13) << setfill(' ') << status << "| " << endl;
+        current = current->next;
+    }
+    cout << left << setw(96) << setfill('=') << "" << endl;
 }
