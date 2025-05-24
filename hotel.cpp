@@ -30,26 +30,25 @@ FILE *file;
 void menuLogin();
 void loginAdmin();
 void loginUser();
-void daftarHotel();
-void cariHotel();
+void daftarKamar();
+void cariKamar();
 void berdasarnama();
 void berdasarkanTipe();
 void pesanKamar();
-void tambahHotel();
-void hapusHotel();
+void tambahKamar();
+void hapusKamar();
 void bacaKamardariFile();
-void tampilkanHotel();
+void tampilkanKamar();
 void bersihkanLinkedListKamar();
 void sortHarga();
 void sortBintang();
 void editKamar();
 void ubahStatusKamar();
-void tampilkanHotelyangTerisi();
+void tampilkanKamaryangTerisi();
 void bacaPelanggandariFile();
 void bersihkanLinkedListPelanggan();
 void tampilkanPelanggan();
 void checkoutKamar();
-
 
 int main() {
     menuLogin();
@@ -58,14 +57,13 @@ int main() {
 
 void menuLogin() {
     int pilih;
-
     do {
         system("cls");
         cout << "Pilih menu login" << endl;
         cout << setw(16) << setfill('-') << "" << endl;
         cout << "1. Login sebagai admin" << endl;
         cout << "2. Login sebagai pelanggan" << endl;
-        cout << "3. Batal" << endl;
+        cout << "3. Keluar Program" << endl;
         cout << "Pilih menu: "; cin >> pilih;
 
         switch (pilih) {
@@ -82,6 +80,7 @@ void menuLogin() {
                 exit(0);
                 break;
             default :
+                system("cls");
                 cout << "Pilihan tidak valid!" << endl;
                 system("pause");
                 break;
@@ -89,7 +88,7 @@ void menuLogin() {
     } while(pilih!=3);
 }
 
-void daftarHotel(){
+void daftarKamar(){
     int pil;
     do {
         system("cls");
@@ -231,13 +230,13 @@ void loginAdmin(){
 
         switch (menu) {
             case 1 : 
-                tambahHotel();
+                tambahKamar();
                 system("pause");
                 break;
                 
             case 2 :
                 bacaKamardariFile();
-                hapusHotel();
+                hapusKamar();
                 system("pause");
                 break;
             case 3:
@@ -246,13 +245,13 @@ void loginAdmin(){
                 break;
             case 4 :
                 bacaKamardariFile();
-                tampilkanHotel();
+                tampilkanKamar();
                 system("pause");
                 break;
             case 5:
                 bacaKamardariFile();
                 bacaPelanggandariFile();
-                tampilkanHotelyangTerisi();
+                tampilkanKamaryangTerisi();
                 system("pause");
                 break;
             case 6:
@@ -297,14 +296,12 @@ void loginUser() {
         switch (menu) {
             case 1 : 
                 bacaKamardariFile();
-                daftarHotel();
-                system("pause");
+                daftarKamar();
                 break;
                 
             case 2 :
                 bacaKamardariFile();
-                cariHotel();
-                system("pause");
+                cariKamar();
                 break;
             case 3:
                 bacaKamardariFile();
@@ -326,7 +323,7 @@ void loginUser() {
     } while(menu!=5);
 }
 
-void cariHotel(){
+void cariKamar(){
     int mpilih;
     do{
         system("cls");
@@ -439,13 +436,13 @@ void berdasarkanTipe() {
     cout << left << setw(91) << setfill('=') << "" << endl;
 
     if (!found) {
-        cout << "Kota tidak ditemukan.\n";
+        cout << "Tipe tidak ditemukan.\n";
     }
 
     system("pause");
 }
 
-void tambahHotel() {
+void tambahKamar() {
     int jml;
     cout << "Input Data Kamar" << endl;
     cout << setw(15) << setfill('-') << "" << endl;
@@ -532,7 +529,7 @@ void bacaKamardariFile() {
     }
 
     fclose(file);
-    cout << "Data hotel berhasil dibaca dari file ke linked list.\n";
+    cout << "Data kamar berhasil dibaca dari file ke linked list.\n";
 }
 
 
@@ -547,7 +544,7 @@ void bersihkanLinkedListKamar() {
     head = nullptr;
 }
 
-void hapusHotel(){
+void hapusKamar(){
     if (head == nullptr) {
         cout << "Tidak ada data hotel untuk dihapus.\n";
         return;
@@ -598,7 +595,7 @@ void hapusHotel(){
     }
 }
 
-void tampilkanHotel() {
+void tampilkanKamar() {
     Kamar* current = head;
     int no = 1;
 
@@ -668,7 +665,7 @@ void bacaPelanggandariFile() {
     }
 
     fclose(file);
-    cout << "Data hotel berhasil dibaca dari file ke linked list.\n";
+    cout << "Data Pelanggan berhasil dibaca dari file ke linked list.\n";
 }
 
 void bersihkanLinkedListPelanggan(){
@@ -684,7 +681,7 @@ void bersihkanLinkedListPelanggan(){
 
 void editKamar() {
     if (head == nullptr) {
-        cout << "Tidak ada data hotel untuk diedit.\n";
+        cout << "Tidak ada data kamar untuk diedit.\n";
         return;
     }
 
@@ -837,7 +834,7 @@ void pesanKamar() {
 
 void ubahStatusKamar(){
     if (head == nullptr) {
-        cout << "Tidak ada data hotel untuk diedit.\n";
+        cout << "Tidak ada data kamar untuk diedit.\n";
         return;
     }
     char namaUpdate[50];
@@ -896,29 +893,29 @@ void tampilkanPelanggan() {
     }
 
     cout << "\nDaftar Pelanggan:\n";
-     cout << left << setw(96) << setfill('=') << "" << endl;
+     cout << left << setw(116) << setfill('=') << "" << endl;
     cout << left << setw(5) << setfill(' ') << "| No"
          << setw(20) << setfill(' ')<< "| Nama"
          << setw(15) << setfill(' ')<< "| Nomor Telp"
-         << setw(10) << setfill(' ')<< "| Email"
+         << setw(30) << setfill(' ')<< "| Email"
          << setw(15) << setfill(' ')<< "| Alamat"
          << setw(30) << setfill(' ')<< "| Nama Kamar yang dipesan" << "|" << endl;
-    cout << left << setw(96) << setfill('=') << "" << endl;
+    cout << left << setw(116) << setfill('=') << "" << endl;
     while (bantu != nullptr) { 
         cout << left 
         << setw(2) << setfill (' ')<< "|"
         << setw(3) << setfill(' ') << no++ << "| "
         << setw(18) << setfill(' ') << bantu->nama << "| "
         << setw(13) << setfill(' ') << bantu->noTelp << "| "
-        << setw(8) << setfill(' ') << bantu->gmail << "| "
+        << setw(28) << setfill(' ') << bantu->gmail << "| "
         << setw(13) << setfill(' ') << bantu->alamat << "| "
         << setw(28) << setfill(' ') << bantu->namakamar << "| " << endl;
         bantu = bantu->next;
     }
-    cout << left << setw(96) << setfill('=') << "" << endl;
+    cout << left << setw(116) << setfill('=') << "" << endl;
 }
 
-void tampilkanHotelyangTerisi(){
+void tampilkanKamaryangTerisi(){
     Kamar* bantuKamar = head;
     pelanggan* bantuPelanggan = kepala;
     int no = 1;
